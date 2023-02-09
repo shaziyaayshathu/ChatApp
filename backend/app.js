@@ -34,7 +34,7 @@ async function findRoom(user1, user2){
   room1 = `${user1}-${user2}`;
   room2 = `${user2}-${user1}`;
   data =await messageModel.findOne({ $or: [ {room : room2}, { room: room1 } ] })
-  // console.log("db data ",data);
+  
   if(data == null){
     console.log("empty");
     newRoom = new messageModel({room : room1, messages:[]});
@@ -42,10 +42,10 @@ async function findRoom(user1, user2){
     console.log("new  "  ,savedRoom.room);
     room = savedRoom
     data = savedRoom
-    // console.log(room);
+   
   }else{
     room = data
-    // console.log("not empty" , room);
+    
   }
 }
 
@@ -70,7 +70,7 @@ io.on('connection', (socket)=>{
       socket.join(room.room);
       console.log("room from old msg ",room);
       await io.to(room.room).emit('old_message',data.messages)            // send the old chats to fronend
-      // console.log("re sending msg ", data.messages);
+      
   }); 
 
   socket.on('send_message',async (msg) => {                               // receiving the messages that coming from frontend

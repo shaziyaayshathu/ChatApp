@@ -4,7 +4,7 @@ const router = express.Router();
 const userModel = require('../models/user')
 const verifyToken = require('../middlewares/jwtVerify')
 
-// show selected user only
+// show only selected user 
 router.get('/chat/:id',verifyToken, async(req, res)=>{
     try {
         let id = req.params.id
@@ -34,8 +34,7 @@ router.get('/users',verifyToken, async(req, res)=>{
 // select single user with user name
 router.post('/logined_user', async(req, res)=>{
     try {
-        // console.log("function called-------------------");
-        // console.log("from frontend ", req.body.sender);
+        
         let name = req.body.sender
         let user = await userModel.findOne({userName : name},{password : 0})
         if(user){
